@@ -20,7 +20,7 @@ export default function LogoLoop({
   items,
   speed = 110,
   gap = 48,
-  pauseOnHover = true,
+  pauseOnHover = false,
   fadeOut = true,
   fadeOutColor = "#060010",
   ariaLabel = "Cinta",
@@ -104,7 +104,7 @@ export default function LogoLoop({
       ref={contRef}
       role="region"
       aria-label={ariaLabel}
-      className={`relative overflow-x-hidden ${className}`}
+      className={`relative overflow-hidden ${className}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -122,7 +122,7 @@ export default function LogoLoop({
           />
         </>
       )}
-      <div ref={trackRef} className="flex w-max select-none will-change-transform">
+      <div ref={trackRef} className="flex w-max select-none py-1 will-change-transform">
         {listas}
       </div>
     </div>
