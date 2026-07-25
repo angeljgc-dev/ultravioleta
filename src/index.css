@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* ================= TOKENS ULTRAVIOLETA ================= */
+@theme {
+  --color-tinta: #f4f0ff;
+  --color-fondo: #060010;
+  --color-lavanda: #b19eef;
+  --color-violeta: #7c3aed;
+  --color-magenta: #ff2ea6;
+  --color-cian: #2ee6ff;
+
+  --font-display: "Unbounded", sans-serif;
+  --font-cuerpo: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* glow estilo HeroUI: sombra del color del elemento, nunca gris */
+  --shadow-glow-lavanda: 0 0 24px rgb(177 158 239 / 0.45), 0 0 64px rgb(177 158 239 / 0.18);
+  --shadow-glow-magenta: 0 0 24px rgb(255 46 166 / 0.45), 0 0 64px rgb(255 46 166 / 0.18);
+  --shadow-glow-cian: 0 0 24px rgb(46 230 255 / 0.45), 0 0 64px rgb(46 230 255 / 0.18);
+
+  /* keyframes del GlitchText (patrón React Bits portado a Tailwind v4) */
+  --animate-glitch-after: glitch var(--after-duration, 1.5s) infinite linear alternate-reverse;
+  --animate-glitch-before: glitch var(--before-duration, 1s) infinite linear alternate-reverse;
+
+  @keyframes glitch {
+    0% { clip-path: inset(20% 0 50% 0); }
+    10% { clip-path: inset(15% 0 55% 0); }
+    20% { clip-path: inset(30% 0 40% 0); }
+    30% { clip-path: inset(10% 0 60% 0); }
+    40% { clip-path: inset(25% 0 35% 0); }
+    50% { clip-path: inset(20% 0 50% 0); }
+    60% { clip-path: inset(15% 0 55% 0); }
+    70% { clip-path: inset(30% 0 40% 0); }
+    80% { clip-path: inset(20% 0 50% 0); }
+    90% { clip-path: inset(15% 0 55% 0); }
+    100% { clip-path: inset(30% 0 40% 0); }
+  }
+}
+
+html {
+  background: var(--color-fondo);
+  overflow-x: clip;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  font-family: var(--font-cuerpo);
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-magenta);
+  color: var(--color-fondo);
+}
+
+/* ===== scanlines CRT (footer) ===== */
+.crt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgb(0 0 0 / 0.22) 3px,
+    transparent 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* ===== texto neón ===== */
+.neon-lavanda {
+  color: var(--color-lavanda);
+  text-shadow: 0 0 8px rgb(177 158 239 / 0.9), 0 0 32px rgb(124 58 237 / 0.6);
+}
+.neon-magenta {
+  color: var(--color-magenta);
+  text-shadow: 0 0 8px rgb(255 46 166 / 0.9), 0 0 32px rgb(255 46 166 / 0.5);
+}
+.neon-cian {
+  color: var(--color-cian);
+  text-shadow: 0 0 8px rgb(46 230 255 / 0.9), 0 0 32px rgb(46 230 255 / 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
