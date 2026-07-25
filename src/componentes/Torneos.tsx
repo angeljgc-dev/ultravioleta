@@ -1,11 +1,15 @@
-/* TORNEOS — programa semanal como tabla de posiciones. */
+/* TORNEOS — programa semanal como tabla de posiciones, con la partida
+   fantasma corriendo de fondo: la metáfora literal de la sección. */
 import { motion, useReducedMotion } from "motion/react";
 import { TORNEOS } from "../contenido";
+import DemoScreen from "./demo/DemoScreen";
 
 export default function Torneos() {
   const reducido = useReducedMotion();
   return (
-    <section id="torneos" aria-label="Torneos" className="mx-auto max-w-6xl px-6 py-28 sm:py-36">
+    <section id="torneos" aria-label="Torneos" className="relative overflow-hidden py-28 sm:py-36">
+      <DemoScreen opacidad={0.15} />
+      <div className="relative mx-auto max-w-6xl px-6">
       <motion.header
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -44,6 +48,7 @@ export default function Torneos() {
           </motion.li>
         ))}
       </ol>
+      </div>
     </section>
   );
 }

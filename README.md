@@ -46,6 +46,31 @@ sentía a plantilla de SaaS, se rehízo.
   hora, jugadores, nombre) — el canal real de un negocio en Guadalajara, sin
   backend.
 
+## Dibujado en casa: la partida fantasma y la cabina
+
+Las dos piezas centrales no usan un solo asset externo.
+
+- **El demo screen.** Detrás de Torneos corre una partida fantasma estilo
+  *Galaxian* — la máquina que da nombre a la casa. Todos los sprites están
+  dibujados como matrices en el código (nave, dos tipos de invasor con aleteo,
+  explosión de cuatro cuadros) y una fuente pixel 3×5 propia pinta el HUD. El
+  juego se juega solo: la nave patrulla, elige columna, apunta y dispara con
+  cadencia contemplativa (~90 s por oleada); los invasores derivan en onda
+  triangular con aleteo síncrono cada 600 ms. Corre en un backbuffer de 240×136
+  escalado con `image-rendering: pixelated`, sprites pre-horneados a canvas
+  (30 `drawImage` por cuadro en vez de ~1,200 `fillRect`), y el bucle solo vive
+  mientras la sección está en viewport.
+- **La cabina.** En Fichas hay una cabina arcade 3D modelada con primitivas —
+  cajas y cilindros con `flatShading`, marquesina emisiva con el nombre en la
+  misma fuente pixel, palanca, tres botones, puerta de fichas con ranura cian —
+  que sigue al puntero con `MathUtils.damp`. Y su pantalla **reproduce en vivo
+  la misma partida fantasma** vía `CanvasTexture` del mismo backbuffer: un solo
+  motor, dos salidas, y la landing entera se siente como un salón encendido.
+- Cazado en el camino: el timestamp del primer `requestAnimationFrame` puede ser
+  *anterior* al `performance.now()` con el que arrancas el reloj — el primer
+  `dt` sale negativo y un módulo de JavaScript sobre un número negativo devuelve
+  índice `-1`. Clamp inferior a cero y módulo euclidiano.
+
 ## El vocabulario de animación
 
 - **Seda violeta por shader** — el fondo del hero es un fragment shader con

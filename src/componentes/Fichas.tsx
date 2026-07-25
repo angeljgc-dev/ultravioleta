@@ -1,7 +1,13 @@
 /* FICHAS — deja de ser tabla de precios de SaaS: cada plan es una ficha
-   troquelada de verdad, con canto dentado y la denominación grabada. */
+   troquelada de verdad, con canto dentado y la denominación grabada.
+   Al fondo de la sección: la cabina 3D modelada en casa, reproduciendo en su
+   pantalla la misma partida fantasma de Torneos. */
+import { lazy, Suspense } from "react";
 import { motion } from "motion/react";
 import { PLANES, RESERVA, type Plan } from "../contenido";
+
+/* three ya viaja en chunk aparte; la cabina se une a esa carga diferida */
+const Cabina3D = lazy(() => import("./demo/Cabina3D"));
 
 /* ficha troquelada: canto dentado por 24 marcas radiales */
 function Ficha({ plan, destacado }: { plan: Plan; destacado: boolean }) {
@@ -113,26 +119,50 @@ export default function Fichas() {
         ))}
       </div>
 
-      {/* la reserva vive aquí, después de ver el precio */}
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mt-14 text-center"
-      >
-        <a
-          href={`https://wa.me/${RESERVA.whatsapp}?text=${encodeURIComponent(RESERVA.mensaje)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center gap-3 border-2 border-cian px-8 py-4 font-mono text-[0.7rem] font-semibold tracking-[0.26em] text-cian shadow-glow-cian transition-colors hover:bg-cian hover:text-fondo"
+      {/* la cabina de la casa y la reserva, cara a cara */}
+      <div className="mt-16 grid grid-cols-1 items-center gap-10 md:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="h-[380px] sm:h-[460px]"
         >
-          APARTAR POR WHATSAPP
-        </a>
-        <p className="mt-4 font-mono text-[0.62rem] tracking-[0.2em] text-tinta/60">
-          TE CONTESTAMOS ANTES DE QUE SE ACABE TU CRÉDITO
-        </p>
-      </motion.div>
+          <Suspense fallback={null}>
+            <Cabina3D />
+          </Suspense>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center md:text-left"
+        >
+          <p className="font-mono text-[0.65rem] tracking-[0.28em] text-lavanda">
+            CABINA 07 · LIBRE ESTA NOCHE
+          </p>
+          <h3 className="font-display mt-3 text-2xl font-bold sm:text-3xl">
+            La máquina te está esperando
+          </h3>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-tinta/75 md:mx-0">
+            Aparta tu cabina y llega directo a jugar: fichas en la ranura, marcador en
+            ceros y tu nombre listo para la tabla.
+          </p>
+          <a
+            href={`https://wa.me/${RESERVA.whatsapp}?text=${encodeURIComponent(RESERVA.mensaje)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex min-h-11 items-center gap-3 border-2 border-cian px-8 py-4 font-mono text-[0.7rem] font-semibold tracking-[0.26em] text-cian shadow-glow-cian transition-colors hover:bg-cian hover:text-fondo"
+          >
+            APARTAR POR WHATSAPP
+          </a>
+          <p className="mt-4 font-mono text-[0.62rem] tracking-[0.2em] text-tinta/60">
+            TE CONTESTAMOS ANTES DE QUE SE ACABE TU CRÉDITO
+          </p>
+        </motion.div>
+      </div>
     </section>
   );
 }
