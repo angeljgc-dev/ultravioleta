@@ -31,7 +31,9 @@ export default function LogoLoop({
   const seqRef = useRef<HTMLUListElement>(null);
   const [anchoSeq, setAnchoSeq] = useState(0);
   const [copias, setCopias] = useState(2);
-  const [hover, setHover] = useState(false);
+  /* hover vive en un ref: si fuera estado en las deps del efecto rAF,
+     cada enter/leave reiniciaría offset y el marquee saltaría al inicio */
+  const hoverRef = useRef(false);
 
   const medir = useCallback(() => {
     const cont = contRef.current?.clientWidth ?? 0;
@@ -66,7 +68,7 @@ export default function LogoLoop({
     const animar = (t: number) => {
       const dt = Math.max(0, t - (ultimo ?? t)) / 1000;
       ultimo = t;
-      const objetivo = hover && pauseOnHover ? 0 : speed;
+      const objetivo = hoverRef.current && pauseOnHover ? 0 : speed;
       vel += (objetivo - vel) * (1 - Math.exp(-dt / TAU_SUAVIZADO));
       if (anchoSeq > 0) {
         offset = (((offset + vel * dt) % anchoSeq) + anchoSeq) % anchoSeq;
@@ -76,7 +78,7 @@ export default function LogoLoop({
     };
     raf = requestAnimationFrame(animar);
     return () => cancelAnimationFrame(raf);
-  }, [speed, anchoSeq, hover, pauseOnHover]);
+  }, [speed, anchoSeq, pauseOnHover]);
 
   const listas = useMemo(
     () =>
@@ -105,8 +107,12 @@ export default function LogoLoop({
       role="region"
       aria-label={ariaLabel}
       className={`relative overflow-hidden ${className}`}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => {
+        hoverRef.current = true;
+      }}
+      onMouseLeave={() => {
+        hoverRef.current = false;
+      }}
     >
       {fadeOut && (
         <>

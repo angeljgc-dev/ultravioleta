@@ -2,7 +2,7 @@
 import { useRef, lazy, Suspense } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import DecryptedText from "./reactbits/DecryptedText";
-import { MARCA } from "../contenido";
+import { MARCA, RESERVA } from "../contenido";
 
 /* three.js viaja en su propio chunk: el hero pinta al instante sobre el
    fondo basalto y la seda aparece en cuanto el shader está listo */
@@ -52,7 +52,7 @@ export default function Hero() {
             sequential
             revealDirection="center"
             speed={55}
-            characters="ΔΨΦΩ▲▼◆●01"
+            characters="0123456789ABCDEF█▓▒░"
             className="text-tinta"
             encryptedClassName="neon-magenta"
           />
@@ -76,15 +76,31 @@ export default function Hero() {
           {MARCA.bajada}
         </motion.p>
 
+        {/* CTA como ranura de monedas: la ficha cae al pasar el cursor */}
         <motion.a
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={reducido ? undefined : { scale: 1.04 }}
           whileTap={reducido ? undefined : { scale: 0.97 }}
-          href="#fichas"
-          className="mt-10 inline-block rounded-full border border-magenta bg-magenta/12 px-9 py-4 font-mono text-[0.7rem] font-semibold tracking-[0.26em] text-magenta shadow-glow-magenta transition-colors hover:bg-magenta hover:text-fondo"
+          href={`https://wa.me/${RESERVA.whatsapp}?text=${encodeURIComponent(RESERVA.mensaje)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group mt-10 inline-flex items-center gap-3 border-2 border-magenta bg-magenta/12 px-8 py-4 font-mono text-[0.7rem] font-semibold tracking-[0.26em] text-magenta shadow-glow-magenta transition-colors hover:bg-magenta hover:text-fondo"
         >
+          <motion.svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            aria-hidden="true"
+            className="shrink-0"
+            variants={{ reposo: { y: 0, rotate: 0 }, cae: { y: [0, -3, 6], rotate: 180 } }}
+            initial="reposo"
+            whileHover={reducido ? undefined : "cae"}
+            transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <circle cx="9" cy="9" r="7.5" fill="none" stroke="currentColor" strokeWidth="2" />
+            <circle cx="9" cy="9" r="3" fill="currentColor" />
+          </motion.svg>
           {MARCA.cta}
         </motion.a>
       </motion.div>

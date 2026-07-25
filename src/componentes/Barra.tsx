@@ -41,16 +41,16 @@ export default function Barra() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: reducido ? 0 : i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className={`rounded-2xl border border-tinta/10 bg-white/[0.03] p-7 transition-all duration-300 ${GLOW[c.color]}`}
+              className={`rounded-md border border-tinta/10 bg-white/[0.03] p-7 transition-all duration-300 ${GLOW[c.color]}`}
             >
               <div className="flex items-baseline justify-between gap-4">
                 <h3 className={`font-display text-xl font-semibold sm:text-2xl ${NEON[c.color]}`}>{c.nombre}</h3>
                 <span className="font-mono text-lg font-semibold">
-                  {c.precio === 0 ? "2×1" : `$${c.precio}`}
+                  {c.promo ?? `$${c.precio}`}
                 </span>
               </div>
-              <p className="mt-1 font-mono text-[0.62rem] tracking-[0.24em] text-tinta/40 uppercase">{c.juego}</p>
-              <p className="mt-4 text-sm leading-relaxed text-tinta/70">{c.desc}</p>
+              <p className="mt-1 font-mono text-[0.62rem] tracking-[0.24em] text-tinta/60 uppercase">{c.juego}</p>
+              <p className="mt-4 text-sm leading-relaxed text-tinta/75">{c.desc}</p>
             </motion.article>
           ))}
         </div>

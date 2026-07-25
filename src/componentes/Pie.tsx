@@ -9,15 +9,13 @@ export default function Pie() {
         {MARCA.nombre}
       </GlitchText>
 
-      <p className="mt-6 font-mono text-[0.62rem] tracking-[0.24em] text-tinta/60">
-        {MARCA.direccion}
-      </p>
-      <p className="mt-2 font-mono text-[0.62rem] tracking-[0.24em] text-lavanda">{MARCA.horario}</p>
+      <p className="mt-6 font-mono text-[0.68rem] tracking-[0.24em] text-tinta/70">{MARCA.direccion}</p>
+      <p className="mt-2 font-mono text-[0.68rem] tracking-[0.24em] text-lavanda">{MARCA.horario}</p>
 
-      <p className="mx-auto mt-10 max-w-md font-mono text-[0.56rem] leading-relaxed tracking-[0.18em] text-tinta/35">
+      <p className="mx-auto mt-10 max-w-md font-mono text-[0.64rem] leading-relaxed tracking-[0.18em] text-tinta/55">
         {FOOTER.extra}
       </p>
-      <p className="mt-3 font-mono text-[0.56rem] tracking-[0.14em] text-tinta/35">
+      <p className="mt-3 font-mono text-[0.64rem] leading-relaxed tracking-[0.14em] text-tinta/55">
         {FOOTER.legal} · Fotografía: Pexels · Componentes de animación adaptados de React Bits (MIT)
       </p>
     </footer>

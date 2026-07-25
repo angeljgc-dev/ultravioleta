@@ -93,7 +93,8 @@ export type Coctel = {
   id: string;
   nombre: string;
   juego: string; // guiño
-  precio: number;
+  precio: number | null; // null cuando aplica una promo en su lugar
+  promo?: string;
   desc: string;
   color: "lavanda" | "magenta" | "cian";
 };
@@ -127,7 +128,8 @@ export const COCTELES: Coctel[] = [
     id: "continue",
     nombre: "Continue?",
     juego: "10… 9… 8…",
-    precio: 0, // se muestra como "2×1"
+    precio: null,
+    promo: "2×1",
     desc: "El coctel del cierre: 2×1 en el último round, de 01:00 a 02:00.",
     color: "magenta",
   },
@@ -184,4 +186,12 @@ export const PLANES: Plan[] = [
 export const FOOTER = {
   legal: "ULTRAVIOLETA es una marca ficticia. Serie páginas-película.",
   extra: "PROHIBIDO DESCONECTAR LAS MÁQUINAS · EL MARCADOR NO SE REINICIA",
+};
+
+/* Reserva sin backend: deep link de WhatsApp con mensaje prellenado.
+   Número de demostración (marca ficticia) — sustituir por el real al operar. */
+export const RESERVA = {
+  whatsapp: "5213300000000",
+  mensaje:
+    "¡Hola ULTRAVIOLETA! Quiero reservar una máquina.\n• Día: \n• Hora: \n• Jugadores: \n• Nombre: ",
 };

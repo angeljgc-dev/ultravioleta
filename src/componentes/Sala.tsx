@@ -2,23 +2,26 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 
+/* URL base sin query: el ancho se elige por srcset según el hueco real */
 const FOTOS = [
   {
-    src: "https://images.pexels.com/photos/35931626/pexels-photo-35931626.jpeg?auto=compress&cs=tinysrgb&w=1000",
+    src: "https://images.pexels.com/photos/35931626/pexels-photo-35931626.jpeg",
     alt: "Pasillo de máquinas arcade bañado en neón magenta y violeta",
     pie: "EL PASILLO · 30 CABINAS",
   },
   {
-    src: "https://images.pexels.com/photos/29027879/pexels-photo-29027879.jpeg?auto=compress&cs=tinysrgb&w=1000",
+    src: "https://images.pexels.com/photos/29027879/pexels-photo-29027879.jpeg",
     alt: "Panel de control arcade con borde de luz cian sobre fondo negro",
     pie: "CONTROLES ORIGINALES",
   },
   {
-    src: "https://images.pexels.com/photos/30351933/pexels-photo-30351933.jpeg?auto=compress&cs=tinysrgb&w=1000",
+    src: "https://images.pexels.com/photos/30351933/pexels-photo-30351933.jpeg",
     alt: "Máquinas de premios con neón violeta y piso de ajedrez",
     pie: "ZONA DE PREMIOS",
   },
 ];
+
+const px = (base: string, w: number) => `${base}?auto=compress&cs=tinysrgb&w=${w}`;
 
 function Columna({ foto, indice }: { foto: (typeof FOTOS)[number]; indice: number }) {
   const ref = useRef<HTMLElement>(null);
@@ -29,10 +32,12 @@ function Columna({ foto, indice }: { foto: (typeof FOTOS)[number]; indice: numbe
   const y = useTransform(scrollYProgress, [0, 1], [desplaza, `-${desplaza}`]);
 
   return (
-    <figure ref={ref as React.RefObject<HTMLElement>} className="group relative overflow-hidden rounded-2xl border border-tinta/10">
+    <figure ref={ref as React.RefObject<HTMLElement>} className="group relative overflow-hidden rounded-md border border-tinta/10">
       <motion.img
         style={{ y, scale: 1.18 }}
-        src={foto.src}
+        src={px(foto.src, 800)}
+        srcSet={`${px(foto.src, 480)} 480w, ${px(foto.src, 800)} 800w, ${px(foto.src, 1200)} 1200w`}
+        sizes="(min-width: 640px) 33vw, 100vw"
         alt={foto.alt}
         loading="lazy"
         decoding="async"

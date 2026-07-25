@@ -77,6 +77,14 @@ const FRAG = /* glsl */ `
     // grano fino: rompe el banding de los gradientes oscuros
     col += (hash21(vUv * uResolucion + uTiempo) - 0.5) * 0.02;
 
+    // cuantización con patrón Bayer 4x4: la seda deja de ser gradiente de
+    // fintech y se vuelve fósforo ditherizado de CRT (dirección de arte arcade)
+    vec2 px = floor(vUv * uResolucion * 0.5);
+    float bx = mod(px.x, 4.0), by = mod(px.y, 4.0);
+    float bayer = mod(bx * 2.0 + by * 3.0 + bx * by, 16.0) / 16.0;
+    float niveles = 22.0;
+    col = floor(col * niveles + bayer) / niveles;
+
     gl_FragColor = vec4(col, 1.0);
   }
 `;

@@ -12,7 +12,39 @@ catálogo React Bits.
 
 | Hero | Sección |
 | --- | --- |
-| ![Hero](docs/hero.png) | ![Sección](docs/seccion.png) |
+| ![Hero](docs/hero.jpg) | ![Sección](docs/seccion.png) |
+
+## La fantasía manda
+
+Cada decisión de front —paleta, tipografía, transiciones, figuras— responde a una
+sola pregunta de control: **«¿esto lo haría una máquina arcade?»**. Si algo se
+sentía a plantilla de SaaS, se rehízo.
+
+- **Attract mode.** La primera visita abre con la pantalla de reposo de una
+  cabina: `© 1991 ULTRAVIOLETA AMUSEMENTS`, `INSERT COIN` parpadeando en pasos
+  duros (nunca en *fade*: el parpadeo arcade es binario), `CREDIT 0` abajo a la
+  izquierda. Cualquier tecla o clic inserta la ficha y un flash de 90 ms revela el
+  sitio. Se salta sola a los 4 s, no se repite en la sesión y con
+  `prefers-reduced-motion` ni aparece.
+- **Fósforo, no gradiente.** El shader del hero cuantiza su salida a 22 niveles
+  con un patrón Bayer 4×4: la seda deja de parecer degradado de fintech y pasa a
+  leerse como fósforo ditherizado de monitor.
+- **CRT sistémico.** Las scanlines dejaron el footer y son ahora una capa fija
+  sobre toda la página, con viñeta en las esquinas.
+- **Marcadores que cuentan.** Los récords suben desde cero con ceros a la
+  izquierda (`048,750`) y frenan como un contador mecánico; las iniciales del
+  dueño parpadean como una entrada de tabla.
+- **Marquesinas, no *cards*.** Las máquinas se inclinan con `useSpring`
+  (`rotateX/Y` ±6°, perspectiva 900) y el glare sigue al cursor.
+- **Fichas troqueladas.** Los precios ya no son una tabla comparativa: cada plan
+  es una ficha SVG con canto dentado y la denominación grabada, y el badge dice
+  `HIGH SCORE`. Las esquinas del sitio bajaron a `rounded-md` — el arcade es
+  rectangular y biselado.
+- **Código Konami.** `↑↑↓↓←→←→BA` dispara un barrido de sincronía horizontal,
+  el cartel `FREE PLAY MODE` glitcheado y 30 segundos de sala a más voltaje.
+- **Reservar de verdad.** El CTA abre WhatsApp con el mensaje prellenado (día,
+  hora, jugadores, nombre) — el canal real de un negocio en Guadalajara, sin
+  backend.
 
 ## El vocabulario de animación
 
@@ -45,9 +77,19 @@ filtrable) → la sala (tríptico) → la barra (cocteles neón) → torneos →
 
 | Condición | Qué pasa |
 | --- | --- |
-| `prefers-reduced-motion` | Shader congelado en un cuadro, sin scramble, sin sparks, sin cursor, cinta detenida — verificado: 0 píxeles de diferencia entre capturas |
-| Táctil | Sin cursor gooey ni hovers; todo accesible por tap |
+| `prefers-reduced-motion` | `<MotionConfig reducedMotion="user">` desactiva toda animación de transform (el *kill-rule* de CSS no alcanza a Motion, que anima por WAAPI); shader congelado, sin attract mode, sin scanlines, sin chispas. Verificado con muestreo por `rAF`: el transform salta de `y:36` a `none` sin un solo valor intermedio, y dos capturas separadas 1.4 s dan **0 píxeles** de diferencia |
+| Táctil | Sin hovers necesarios; todo accesible por tap |
 | Hero fuera de viewport | El render loop del shader pasa a `demand` |
+| Sin interacción | El `rAF` de las chispas no corre: arranca al primer clic y se detiene solo cuando no queda ninguna viva |
+
+### Accesibilidad
+
+Contraste medido resolviendo el color real en canvas (Tailwind v4 emite `oklab`,
+que la mayoría de auditores parsea mal) y compositando sobre `#060010`: el texto
+informativo pasó de **2.83–3.41** a **5.70–6.65**, y las listas a **11.61** — todo
+por encima del 4.5:1 de WCAG AA. Los filtros de década usan `aria-pressed`
+(antes prometían un patrón de pestañas con teclado que no existía) y el foco
+tiene anillo cian propio en vez del *outline* fino del navegador.
 
 ## Cómo correr
 

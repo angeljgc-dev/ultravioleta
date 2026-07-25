@@ -35,9 +35,9 @@ export default function Torneos() {
               <h3 className="font-display text-lg font-semibold transition-colors group-hover:text-magenta sm:text-xl">
                 {t.nombre}
               </h3>
-              <p className="font-mono text-[0.62rem] tracking-[0.2em] text-tinta/45 sm:hidden">{t.maquina}</p>
+              <p className="font-mono text-[0.62rem] tracking-[0.2em] text-tinta/60 sm:hidden">{t.maquina}</p>
             </div>
-            <p className="hidden font-mono text-[0.68rem] tracking-[0.16em] text-tinta/55 sm:block">{t.maquina}</p>
+            <p className="hidden font-mono text-[0.68rem] tracking-[0.16em] text-tinta/60 sm:block">{t.maquina}</p>
             <p className="col-start-2 font-mono text-[0.68rem] tracking-[0.14em] text-cian sm:col-start-auto sm:text-right">
               {t.premio}
             </p>
