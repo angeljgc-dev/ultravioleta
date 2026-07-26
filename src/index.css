@@ -1,13 +1,35 @@
 @import "tailwindcss";
 
-/* ================= TOKENS ULTRAVIOLETA ================= */
+/* ================= TOKENS ULTRAVIOLETA =================
+   Sistema acordado por la mesa de diseño: escala de superficies con tinte
+   violeta (el mueble de una cabina no es negro plano — es plástico morado
+   bajo luz UV), roles de texto con piso AA, y acentos semánticos. */
 @theme {
+  /* tinta y fondo */
   --color-tinta: #f4f0ff;
+  --color-tinta-media: rgb(244 240 255 / 0.75); /* metadata, cualquier tamaño */
+  --color-tinta-baja: rgb(244 240 255 / 0.55); /* SOLO texto >= 14px */
   --color-fondo: #060010;
+
+  /* escala de superficies (pasos 1-2 y borde, patrón radix/catppuccin) */
+  --color-fondo-1: #0b0618; /* panel */
+  --color-fondo-2: #130b26; /* elevado / hover / sheet */
+  --color-borde: #241640;
+  --color-velo: rgb(11 6 24 / 0.88); /* único velo permitido (HUD) */
+
+  /* matices crudos */
   --color-lavanda: #b19eef;
   --color-violeta: #7c3aed;
   --color-magenta: #ff2ea6;
   --color-cian: #2ee6ff;
+
+  /* roles semánticos: acción se pulsa, marcador informa, guía orienta */
+  --color-accion: var(--color-magenta);
+  --color-marcador: var(--color-cian);
+  --color-guia: var(--color-lavanda);
+
+  /* radio único de sistema: bisel de cabina, no esquina de SaaS */
+  --radius-cabina: 4px;
 
   --font-display: "Unbounded", sans-serif;
   --font-cuerpo: "Space Grotesk", sans-serif;
@@ -59,22 +81,33 @@ body {
 }
 
 ::selection {
-  background: var(--color-magenta);
+  background: var(--color-accion);
   color: var(--color-fondo);
 }
 
-/* foco visible con identidad propia: anillo cian sobre basalto */
+/* foco visible con identidad propia: anillo de marcador sobre basalto */
 :focus-visible {
-  outline: 2px solid var(--color-cian);
+  outline: 2px solid var(--color-marcador);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius-cabina);
+}
+
+/* ===== .marquesina: la voz del chip de caracteres de la máquina =====
+   Todo micro-label de servicio sale del mismo generador, siempre idéntico. */
+.marquesina {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem; /* 11px: mínimo legible del sistema */
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-tinta-media);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ===== CRT sistémico: scanlines sutiles en toda la página ===== */
 .crt-global {
   position: fixed;
   inset: 0;
-  z-index: 55;
+  z-index: 55; /* el HUD vive DEBAJO: un HUD de arcade está dentro de la pantalla */
   pointer-events: none;
   background: repeating-linear-gradient(
     to bottom,
@@ -95,21 +128,7 @@ body {
   }
 }
 
-/* ===== modo FREE PLAY (código Konami): la sala sube de voltaje ===== */
-html.freeplay main {
-  filter: saturate(1.3) brightness(1.06);
-}
-
-/* parpadeo duro de cabina: pasos, no fades */
-@keyframes parpadeo-arcade {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-.parpadeo {
-  animation: parpadeo-arcade 1.06s steps(1) infinite;
-}
-
-/* ===== scanlines CRT (footer) ===== */
+/* ===== scanlines locales (footer) ===== */
 .crt::after {
   content: "";
   position: absolute;
@@ -123,6 +142,20 @@ html.freeplay main {
     transparent 4px
   );
   mix-blend-mode: multiply;
+}
+
+/* ===== modo FREE PLAY (código Konami): la sala sube de voltaje ===== */
+html.freeplay main {
+  filter: saturate(1.3) brightness(1.06);
+}
+
+/* parpadeo duro de cabina: pasos, no fades */
+@keyframes parpadeo-arcade {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.parpadeo {
+  animation: parpadeo-arcade 1.06s steps(1) infinite;
 }
 
 /* ===== texto neón ===== */
