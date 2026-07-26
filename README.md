@@ -4,6 +4,8 @@
 ![Motion](https://img.shields.io/badge/Motion-12-FF2EA6)
 ![WebGL](https://img.shields.io/badge/GLSL-shader%20propio-7C3AED)
 
+Ver en vivo: https://angeljgc-dev.github.io/ultravioleta/
+
 Landing de un arcade bar ficticio en la Colonia Americana. Es la primera página de la serie que construí con React, y a propósito no lleva ni una línea de GSAP: todo el movimiento sale de Motion, de shaders GLSL propios y de patrones del catálogo React Bits.
 
 | Hero | Sección |
