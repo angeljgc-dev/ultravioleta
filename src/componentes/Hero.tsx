@@ -1,12 +1,24 @@
-/* HERO — seda violeta por shader + título descifrado + parallax de salida con useScroll. */
+/* HERO: seda violeta por shader + título descifrado + parallax de salida con useScroll. */
 import { useRef, lazy, Suspense } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import DecryptedText from "./reactbits/DecryptedText";
 import { MARCA, RESERVA } from "../contenido";
 
-/* three.js viaja en su propio chunk: el hero pinta al instante sobre el
-   fondo basalto y la seda aparece en cuanto el shader está listo */
+/* el shader viaja en su propio chunk: el hero pinta al instante sobre el
+   fondo basalto y la seda aparece en cuanto está lista */
 const FondoSeda = lazy(() => import("./FondoSeda"));
+
+/* Cascada física en vez de relojes encadenados (acuerdo de la mesa: el CTA
+   tardaba 3.2 s en existir). Springs escalonados: cada elemento persigue al
+   anterior en lugar de esperar un delay fijo, y el conjunto es interrumpible. */
+const ENTRADA = {
+  oculto: { opacity: 0, y: 18 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring" as const, stiffness: 220, damping: 26, delay: i * 0.07 },
+  }),
+};
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -37,10 +49,11 @@ export default function Hero() {
 
       <motion.div style={{ y, opacity: opacidad }} className="relative z-10 px-6 text-center">
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="font-mono text-[0.62rem] tracking-[0.34em] text-lavanda sm:text-[0.7rem]"
+          variants={ENTRADA}
+          initial="oculto"
+          animate="visible"
+          custom={0}
+          className="marquesina text-guia sm:text-[0.7rem]"
         >
           ARCADE BAR · COL. AMERICANA · GDL
         </motion.p>
@@ -59,33 +72,36 @@ export default function Hero() {
         </h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          variants={ENTRADA}
+          initial="oculto"
+          animate="visible"
+          custom={1}
           className="neon-lavanda font-display mx-auto mt-5 text-base font-semibold sm:text-xl"
         >
           {MARCA.eslogan}
         </motion.p>
 
         <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.35, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-6 max-w-md text-sm leading-relaxed text-tinta/70 sm:text-base"
+          variants={ENTRADA}
+          initial="oculto"
+          animate="visible"
+          custom={2}
+          className="mx-auto mt-6 max-w-md text-sm leading-relaxed text-tinta-media sm:text-base"
         >
           {MARCA.bajada}
         </motion.p>
 
         {/* CTA como ranura de monedas: la ficha cae al pasar el cursor */}
         <motion.a
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={ENTRADA}
+          initial="oculto"
+          animate="visible"
+          custom={3}
           whileTap={reducido ? undefined : { scale: 0.97 }}
           href={`https://wa.me/${RESERVA.whatsapp}?text=${encodeURIComponent(RESERVA.mensaje)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group mt-10 inline-flex items-center gap-3 border-2 border-magenta bg-magenta/12 px-8 py-4 font-mono text-[0.7rem] font-semibold tracking-[0.26em] text-magenta shadow-glow-magenta transition-colors hover:bg-magenta hover:text-fondo"
+          className="group mt-10 inline-flex items-center gap-3 rounded-(--radius-cabina) border-2 border-accion bg-accion/12 px-8 py-4 font-mono text-[0.7rem] font-semibold tracking-[0.26em] text-accion shadow-glow-magenta transition-colors hover:bg-accion hover:text-fondo"
         >
           <motion.svg
             width="18"
@@ -106,10 +122,11 @@ export default function Hero() {
       </motion.div>
 
       <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 1 }}
-        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 font-mono text-[0.58rem] tracking-[0.3em] text-tinta/40"
+        variants={ENTRADA}
+        initial="oculto"
+        animate="visible"
+        custom={4}
+        className="marquesina absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
       >
         {MARCA.horario}
       </motion.p>

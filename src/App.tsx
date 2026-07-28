@@ -3,6 +3,7 @@ import ClickSpark from "./componentes/reactbits/ClickSpark";
 import LogoLoop from "./componentes/reactbits/LogoLoop";
 import AttractMode from "./componentes/AttractMode";
 import FreePlay from "./componentes/FreePlay";
+import Hud from "./componentes/Hud";
 import Hero from "./componentes/Hero";
 import Sala from "./componentes/Sala";
 import Maquinas from "./componentes/Maquinas";
@@ -31,6 +32,7 @@ export default function App() {
       <ClickSpark sparkColor="#FF2EA6" sparkCount={10} sparkRadius={22} sparkSize={9}>
         <AttractMode />
         <FreePlay />
+        <Hud />
         {/* la sala entera vista a través de un CRT */}
         <div className="crt-global" aria-hidden="true" />
 

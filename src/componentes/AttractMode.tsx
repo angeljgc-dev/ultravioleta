@@ -1,4 +1,4 @@
-/* ATTRACT MODE — la pantalla de reposo de una cabina real.
+/* ATTRACT MODE: la pantalla de reposo de una cabina real.
    "INSERT COIN" parpadeando en pasos duros; cualquier click/tecla inserta la
    ficha (CREDIT 1) y un flash de 80ms revela el sitio. Se salta sola a los 4s,
    no se repite en la misma sesión, y con reduced-motion ni aparece. */
@@ -49,15 +49,15 @@ export default function AttractMode() {
           role="dialog"
           aria-label="Pantalla de inicio. Toca o presiona una tecla para entrar."
         >
-          <p className="text-[0.6rem] tracking-[0.34em] text-tinta/50">© 1991 ULTRAVIOLETA AMUSEMENTS</p>
+          <p className="text-[0.6rem] tracking-[0.34em] text-tinta-media">© 1991 ULTRAVIOLETA AMUSEMENTS</p>
           <p className="font-display text-[clamp(1.6rem,6vw,4rem)] font-extrabold tracking-wide text-tinta">
             ULTRAVIOLETA
           </p>
           <p className="parpadeo neon-magenta text-sm font-semibold tracking-[0.4em] sm:text-lg">
             INSERT COIN
           </p>
-          <p className="absolute bottom-8 left-8 text-[0.62rem] tracking-[0.3em] text-cian">CREDIT 0</p>
-          <p className="absolute right-8 bottom-8 text-[0.62rem] tracking-[0.3em] text-tinta/45">
+          <p className="absolute bottom-8 left-8 text-[0.62rem] tracking-[0.3em] text-marcador">CREDIT 0</p>
+          <p className="absolute right-8 bottom-8 text-[0.62rem] tracking-[0.3em] text-tinta-media">
             1UP · HI 212360
           </p>
         </motion.div>

@@ -1,7 +1,7 @@
-/* FICHAS — deja de ser tabla de precios de SaaS: cada plan es una ficha
+/* FICHAS. Deja de ser tabla de precios de SaaS: cada plan es una ficha
    troquelada de verdad, con canto dentado y la denominación grabada.
-   Al fondo de la sección: la cabina 3D modelada en casa, reproduciendo en su
-   pantalla la misma partida fantasma de Torneos. */
+   Al fondo de la sección va la sala de máquinas 3D modelada en casa, y la
+   cabina central reproduce en su pantalla la misma partida de Torneos. */
 import { lazy, Suspense } from "react";
 import { motion } from "motion/react";
 import { PLANES, RESERVA, type Plan } from "../contenido";
@@ -66,7 +66,7 @@ export default function Fichas() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="mb-12 text-center"
       >
-        <p className="font-mono text-[0.65rem] tracking-[0.28em] text-lavanda">
+        <p className="font-mono text-[0.65rem] tracking-[0.28em] text-guia">
           CAMBIO EXACTO NO NECESARIO · FICHAS TROQUELADAS EN CASA
         </p>
         <h2 className="font-display mt-3 text-3xl font-bold sm:text-5xl">Fichas</h2>
@@ -80,14 +80,14 @@ export default function Fichas() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className={`relative flex flex-col rounded-md border-2 p-8 ${
+            className={`relative flex flex-col rounded-(--radius-cabina) border-2 p-8 ${
               p.destacado
-                ? "border-magenta bg-magenta/[0.07] shadow-glow-magenta"
-                : "border-tinta/12 bg-white/[0.03]"
+                ? "border-accion bg-accion/[0.07] shadow-glow-magenta"
+                : "border-borde bg-fondo-1"
             }`}
           >
             {p.destacado && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-magenta px-4 py-1 font-mono text-[0.6rem] font-semibold tracking-[0.2em] text-fondo">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accion px-4 py-1 font-mono text-[0.6rem] font-semibold tracking-[0.2em] text-fondo">
                 HIGH SCORE
               </span>
             )}
@@ -100,15 +100,15 @@ export default function Fichas() {
                   <span className={`font-display text-4xl font-bold ${p.destacado ? "neon-magenta" : ""}`}>
                     ${p.precio}
                   </span>
-                  <span className="font-mono text-[0.65rem] tracking-[0.18em] text-tinta/60">{p.unidad}</span>
+                  <span className="font-mono text-[0.65rem] tracking-[0.18em] text-tinta-media">{p.unidad}</span>
                 </p>
               </div>
             </div>
 
-            <ul className="mt-6 flex flex-col gap-3 border-t border-tinta/10 pt-6">
+            <ul className="mt-6 flex flex-col gap-3 border-t border-borde pt-6">
               {p.incluye.map((linea) => (
-                <li key={linea} className="flex gap-3 text-sm text-tinta/80">
-                  <span aria-hidden="true" className={p.destacado ? "text-magenta" : "text-lavanda"}>
+                <li key={linea} className="flex gap-3 text-sm text-tinta">
+                  <span aria-hidden="true" className={p.destacado ? "text-accion" : "text-guia"}>
                     ▸
                   </span>
                   {linea}
@@ -126,7 +126,15 @@ export default function Fichas() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="h-[380px] sm:h-[460px]"
+          className="h-[420px] sm:h-[520px]"
+          /* máscara suave: la sala se funde con el basalto en vez de cortarse
+             en un rectángulo: el local no tiene bordes, tiene penumbra */
+          style={{
+            maskImage:
+              "radial-gradient(ellipse 78% 82% at 50% 52%, #000 55%, transparent 100%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 78% 82% at 50% 52%, #000 55%, transparent 100%)",
+          }}
         >
           <Suspense fallback={null}>
             <Cabina3D />
@@ -140,13 +148,13 @@ export default function Fichas() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center md:text-left"
         >
-          <p className="font-mono text-[0.65rem] tracking-[0.28em] text-lavanda">
+          <p className="font-mono text-[0.65rem] tracking-[0.28em] text-guia">
             CABINA 07 · LIBRE ESTA NOCHE
           </p>
           <h3 className="font-display mt-3 text-2xl font-bold sm:text-3xl">
             La máquina te está esperando
           </h3>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-tinta/75 md:mx-0">
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-tinta-media md:mx-0">
             Aparta tu cabina y llega directo a jugar: fichas en la ranura, marcador en
             ceros y tu nombre listo para la tabla.
           </p>
@@ -154,11 +162,11 @@ export default function Fichas() {
             href={`https://wa.me/${RESERVA.whatsapp}?text=${encodeURIComponent(RESERVA.mensaje)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex min-h-11 items-center gap-3 border-2 border-cian px-8 py-4 font-mono text-[0.7rem] font-semibold tracking-[0.26em] text-cian shadow-glow-cian transition-colors hover:bg-cian hover:text-fondo"
+            className="mt-8 inline-flex min-h-11 items-center gap-3 rounded-(--radius-cabina) border-2 border-accion bg-accion/12 px-8 py-4 font-mono text-[0.7rem] font-semibold tracking-[0.26em] text-accion shadow-glow-magenta transition-colors hover:bg-accion hover:text-fondo"
           >
             APARTAR POR WHATSAPP
           </a>
-          <p className="mt-4 font-mono text-[0.62rem] tracking-[0.2em] text-tinta/60">
+          <p className="mt-4 font-mono text-[0.62rem] tracking-[0.2em] text-tinta-media">
             TE CONTESTAMOS ANTES DE QUE SE ACABE TU CRÉDITO
           </p>
         </motion.div>

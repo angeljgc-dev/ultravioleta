@@ -1,6 +1,7 @@
-/* LA SALA — tríptico fotográfico con parallax diferencial (useScroll por columna). */
+/* LA SALA: tríptico fotográfico con parallax diferencial (useScroll por columna). */
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
+import { EncendidoCRT } from "./transiciones";
 
 /* URL base sin query: el ancho se elige por srcset según el hueco real */
 const FOTOS = [
@@ -32,7 +33,7 @@ function Columna({ foto, indice }: { foto: (typeof FOTOS)[number]; indice: numbe
   const y = useTransform(scrollYProgress, [0, 1], [desplaza, `-${desplaza}`]);
 
   return (
-    <figure ref={ref as React.RefObject<HTMLElement>} className="group relative overflow-hidden rounded-md border border-tinta/10">
+    <figure ref={ref as React.RefObject<HTMLElement>} className="group relative overflow-hidden rounded-(--radius-cabina) border border-borde">
       <motion.img
         style={{ y, scale: 1.18 }}
         src={px(foto.src, 800)}
@@ -44,7 +45,7 @@ function Columna({ foto, indice }: { foto: (typeof FOTOS)[number]; indice: numbe
         referrerPolicy="no-referrer"
         className="aspect-[3/4] w-full object-cover"
       />
-      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-fondo/95 to-transparent p-5 pt-14 font-mono text-[0.6rem] tracking-[0.26em] text-tinta/85">
+      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-fondo/95 to-transparent p-5 pt-14 font-mono text-[0.6rem] tracking-[0.26em] text-tinta">
         {foto.pie}
       </figcaption>
     </figure>
@@ -55,16 +56,11 @@ export default function Sala() {
   return (
     <section aria-label="La sala" className="mx-auto max-w-6xl px-6 pb-10">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {/* tres tubos calentando en cascada: el tríptico ya son pantallas */}
         {FOTOS.map((f, i) => (
-          <motion.div
-            key={f.pie}
-            initial={{ opacity: 0, y: 44 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <EncendidoCRT key={f.pie} retraso={i * 0.14}>
             <Columna foto={f} indice={i} />
-          </motion.div>
+          </EncendidoCRT>
         ))}
       </div>
     </section>

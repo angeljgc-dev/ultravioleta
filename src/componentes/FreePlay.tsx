@@ -74,7 +74,7 @@ export default function FreePlay() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ delay: 0.8, duration: 1.2 }}
-              className="font-mono text-[0.65rem] tracking-[0.32em] text-cian"
+              className="font-mono text-[0.65rem] tracking-[0.32em] text-marcador"
             >
               30 LIVES · CÓDIGO ACEPTADO
             </motion.p>

@@ -1,4 +1,4 @@
-/* LAS MÁQUINAS — bento de juegos con filtro por década.
+/* LAS MÁQUINAS: bento de juegos con filtro por década.
    El reacomodo usa animaciones `layout` de Motion (FLIP automático); cada
    tarjeta se inclina como la marquesina de una cabina y su récord cuenta
    de cero como un marcador de verdad. */
@@ -14,6 +14,7 @@ import {
   animate,
 } from "motion/react";
 import { MAQUINAS, type Maquina } from "../contenido";
+import { WipeBloques, TituloSprite } from "./transiciones";
 
 const FILTROS = ["TODAS", "80s", "90s"] as const;
 type Filtro = (typeof FILTROS)[number];
@@ -93,7 +94,7 @@ function TarjetaMaquina({ m }: { m: Maquina }) {
         mx.set(0.5);
         my.set(0.5);
       }}
-      className={`group relative overflow-hidden rounded-md border border-lavanda/15 bg-white/[0.03] p-6 ${
+      className={`group relative overflow-hidden rounded-(--radius-cabina) border border-borde bg-fondo-1 p-6 ${
         m.grande ? "sm:col-span-2" : ""
       }`}
     >
@@ -110,20 +111,20 @@ function TarjetaMaquina({ m }: { m: Maquina }) {
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className="font-display text-xl font-semibold sm:text-2xl">{m.nombre}</h3>
-            <p className="mt-1 font-mono text-[0.65rem] tracking-[0.22em] text-tinta/60">
+            <p className="mt-1 font-mono text-[0.65rem] tracking-[0.22em] text-tinta-media">
               {m.anio} · {m.genero}
             </p>
           </div>
-          <span className="rounded-sm border border-lavanda/25 px-3 py-1 font-mono text-[0.6rem] tracking-[0.2em] text-lavanda">
+          <span className="rounded-(--radius-cabina) border border-lavanda/25 px-3 py-1 font-mono text-[0.6rem] tracking-[0.2em] text-guia">
             {m.decada}
           </span>
         </div>
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="font-mono text-[0.6rem] tracking-[0.24em] text-tinta/60">HIGH SCORE</p>
+            <p className="font-mono text-[0.6rem] tracking-[0.24em] text-tinta-media">HIGH SCORE</p>
             <Marcador record={m.record} />
           </div>
-          <p className="parpadeo font-mono text-[0.65rem] tracking-[0.18em] text-magenta">{m.dueno}</p>
+          <p className="parpadeo font-mono text-[0.65rem] tracking-[0.18em] text-accion">{m.dueno}</p>
         </div>
       </div>
     </motion.article>
@@ -135,17 +136,20 @@ export default function Maquinas() {
   const visibles = MAQUINAS.filter((m) => filtro === "TODAS" || m.decada === filtro);
 
   return (
+    /* STAGE CLEAR: esta es la sección-nivel, se lleva la transición más
+       agresiva. Si el wipe estuviera en las cinco dejaría de significar nada. */
+    <WipeBloques>
     <section id="maquinas" aria-label="Las máquinas" className="mx-auto max-w-6xl px-6 py-28 sm:py-36">
-      <motion.header
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-12 flex flex-wrap items-end justify-between gap-6"
-      >
+      <header className="mb-12 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="font-mono text-[0.65rem] tracking-[0.28em] text-lavanda">SALA PRINCIPAL · 30 CABINAS</p>
-          <h2 className="font-display mt-3 text-3xl font-bold sm:text-5xl">Las máquinas</h2>
+          <p className="marquesina text-guia">SALA PRINCIPAL · 30 CABINAS</p>
+          {/* el retraso deja que el wipe despeje antes de que aterricen las letras */}
+          <TituloSprite
+            texto="Las máquinas"
+            retraso={0.42}
+            claseEstela="text-accion"
+            className="font-display mt-3 text-3xl font-bold sm:text-5xl"
+          />
         </div>
         <div role="group" aria-label="Filtrar máquinas por década" className="flex gap-2">
           {FILTROS.map((f) => (
@@ -153,17 +157,17 @@ export default function Maquinas() {
               key={f}
               aria-pressed={filtro === f}
               onClick={() => setFiltro(f)}
-              className={`min-h-11 rounded-md border px-5 font-mono text-[0.65rem] tracking-[0.2em] transition-colors ${
+              className={`min-h-11 rounded-(--radius-cabina) border px-5 font-mono text-[0.65rem] tracking-[0.2em] transition-colors ${
                 filtro === f
-                  ? "border-magenta bg-magenta/15 text-magenta shadow-glow-magenta"
-                  : "border-tinta/15 text-tinta/60 hover:border-tinta/40 hover:text-tinta"
+                  ? "border-accion bg-accion/15 text-accion shadow-glow-magenta"
+                  : "border-borde text-tinta-media hover:border-guia hover:text-tinta"
               }`}
             >
               {f}
             </button>
           ))}
         </div>
-      </motion.header>
+      </header>
 
       <motion.div layout className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
@@ -173,5 +177,6 @@ export default function Maquinas() {
         </AnimatePresence>
       </motion.div>
     </section>
+    </WipeBloques>
   );
 }
