@@ -1,4 +1,4 @@
-/* DecryptedText — adaptado de React Bits (reactbits.dev) © David Haz, MIT License. */
+/* DecryptedText: adaptado de React Bits (reactbits.dev) © David Haz, MIT License. */
 import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { motion } from "motion/react";
 import type { HTMLMotionProps } from "motion/react";

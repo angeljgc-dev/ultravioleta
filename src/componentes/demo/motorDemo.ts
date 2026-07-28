@@ -1,4 +1,4 @@
-/* MOTOR DE LA PARTIDA FANTASMA — el "demo screen" de una cabina real.
+/* MOTOR DE LA PARTIDA FANTASMA: el "demo screen" de una cabina real.
    Todo dibujado en código: sprites como matrices, fuente pixel 3×5 propia.
    Un solo backbuffer de 240×136 alimenta dos salidas: el fondo de Torneos
    y la pantalla de la cabina 3D (vía CanvasTexture). El bucle corre solo

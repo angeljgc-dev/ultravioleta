@@ -1,4 +1,4 @@
-/* GlitchText — adaptado de React Bits (reactbits.dev) © David Haz, MIT License.
+/* GlitchText: adaptado de React Bits (reactbits.dev) © David Haz, MIT License.
    Fondo de pseudoelementos ajustado al basalto violeta de la marca. */
 import type { FC, CSSProperties } from "react";
 

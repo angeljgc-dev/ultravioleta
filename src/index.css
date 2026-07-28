@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /* ================= TOKENS ULTRAVIOLETA =================
-   Sistema acordado por la mesa de diseño: escala de superficies con tinte
-   violeta (el mueble de una cabina no es negro plano — es plástico morado
-   bajo luz UV), roles de texto con piso AA, y acentos semánticos. */
+   Escala de superficies con tinte violeta (el mueble de una cabina no es
+   negro plano, es plástico morado bajo luz UV), roles de texto con piso AA
+   y acentos semánticos. */
 @theme {
   /* tinta y fondo */
   --color-tinta: #f4f0ff;

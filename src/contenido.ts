@@ -1,4 +1,4 @@
-/* Contenido de ULTRAVIOLETA — arcade bar ficticio, Guadalajara. */
+/* Contenido de ULTRAVIOLETA, arcade bar ficticio, Guadalajara. */
 
 export const MARCA = {
   nombre: "ULTRAVIOLETA",
@@ -6,7 +6,7 @@ export const MARCA = {
   bajada:
     "Treinta máquinas originales, cerveza fría y el marcador más disputado de Guadalajara. Inserta una ficha: la partida sigue abierta desde 1991.",
   direccion: "Av. Chapultepec 480 · Col. Americana · Guadalajara",
-  horario: "MIÉ–DOM · 18:00 – 02:00",
+  horario: "MIÉ-DOM · 18:00 - 02:00",
   cta: "RESERVA TU MÁQUINA",
 };
 
@@ -127,7 +127,7 @@ export const COCTELES: Coctel[] = [
   {
     id: "continue",
     nombre: "Continue?",
-    juego: "10… 9… 8…",
+    juego: "10... 9... 8...",
     precio: null,
     promo: "2×1",
     desc: "El coctel del cierre: 2×1 en el último round, de 01:00 a 02:00.",
@@ -189,7 +189,7 @@ export const FOOTER = {
 };
 
 /* Reserva sin backend: deep link de WhatsApp con mensaje prellenado.
-   Número de demostración (marca ficticia) — sustituir por el real al operar. */
+   Número de demostración (marca ficticia), sustituir por el real al operar. */
 export const RESERVA = {
   whatsapp: "5213300000000",
   mensaje:

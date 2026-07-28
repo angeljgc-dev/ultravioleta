@@ -1,4 +1,4 @@
-/* ClickSpark — adaptado de React Bits (reactbits.dev) © David Haz, MIT License. */
+/* ClickSpark: adaptado de React Bits (reactbits.dev) © David Haz, MIT License. */
 import React, { useRef, useEffect, useCallback } from "react";
 
 interface ClickSparkProps {

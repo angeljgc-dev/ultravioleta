@@ -1,4 +1,4 @@
-/* LogoLoop — adaptado de React Bits (reactbits.dev) © David Haz, MIT License.
+/* LogoLoop: adaptado de React Bits (reactbits.dev) © David Haz, MIT License.
    Versión horizontal compacta: marquee infinito por rAF con velocidad suavizada,
    pausa en hover y respeto de prefers-reduced-motion. */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";

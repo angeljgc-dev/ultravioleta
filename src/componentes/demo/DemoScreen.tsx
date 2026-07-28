@@ -1,4 +1,4 @@
-/* DEMO SCREEN — la partida fantasma como fondo de sección.
+/* DEMO SCREEN: la partida fantasma como fondo de sección.
    Blitea el backbuffer compartido del motor a un canvas propio, escalado con
    image-rendering: pixelated. El bucle solo corre si la sección está en
    viewport y la pestaña visible. Decorativo puro: aria-hidden. */
